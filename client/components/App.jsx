@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ProjectPreview from "./ProjectPreview.jsx";
+import Btn_Back from "./Btn_Back.jsx";
 
 class App extends Component {
   constructor() {
@@ -10,6 +11,7 @@ class App extends Component {
 
     this.openProject = this.openProject.bind(this);
     this.openFolder = this.openFolder.bind(this);
+    this.backButton = this.backButton.bind(this);
   }
 
   componentDidMount() {
@@ -88,7 +90,7 @@ class App extends Component {
             
             if(curDirectory !== '') joinedPath += '\\'; //Adding the extra slash when checking folders outside of root
 
-            console.log('Comparing: ' + curDirectory + ' vs ' + joinedPath);
+            // console.log('Comparing: ' + curDirectory + ' vs ' + joinedPath);
             if(curDirectory === joinedPath) {
                 showFiles.push(
                     <p>{key}: {fileName}</p>
@@ -104,6 +106,7 @@ class App extends Component {
         return (
         <div className="App">
             <p>{this.state.curProject + ' =>' + this.state.curDirectory}</p>
+            <Btn_Back clickHandler={this.backButton}/>
             <div id='folder-container'>
                 {showFolders}
             </div>
@@ -132,9 +135,9 @@ class App extends Component {
         newState.scry = data.scry;
         newState.fileTree = data.fileTree;
 
-        console.log('File Tree: ' + '\nroot: ' + data.root + '(implied): ', newState.fileTree);
+        // console.log('File Tree: ' + '\nroot: ' + data.root + '(implied): ', newState.fileTree);
 
-        console.log('NEW SCRY SET: ' + newState.scry);
+        // console.log('NEW SCRY SET: ', newState.scry);
         this.setState(newState);
       })
       .catch((error) => {
@@ -148,7 +151,7 @@ class App extends Component {
       .then((data) => {
         const newState = {scry: data};
 
-        console.log('NEW SCRY SET: ' + newState);
+        // console.log('NEW SCRY SET: ', newState);
         this.setState(newState);
       })
       .catch((error) => {
@@ -167,7 +170,36 @@ class App extends Component {
   }
 
   backButton(eventData) {
+    const curDirectory = this.state.curDirectory;
+    
+    if(curDirectory === '') {
+        //Go back to project select!
+        fetch("http://localhost:3000/projects")
+        .then((response) => response.json())
+        .then((data) => {
+            this.setState({ curProject: '', projects: [...data] });
+        })
+        .catch((error) => {
+            console.error("Error retrieving projects after going back:", error);
+            this.setState({ curProject: ''});
+        });
+    }
+    else {
+        //Go back a directory
+        const splitDirectory = curDirectory.split('\\');
+        
+        //POP TWICE because there's an empty string at the very end!
+        //Also it mutates
+        splitDirectory.pop();
+        splitDirectory.pop();
 
+        let newDirectory = ''; //Default if the final directory is empty
+        for(let i = 0; i < splitDirectory.length; i++) {
+            newDirectory += splitDirectory[i] + '\\';
+        }
+
+        this.setState({curDirectory: newDirectory});
+    }
   }
 
   changeDirectory(eventData) {
