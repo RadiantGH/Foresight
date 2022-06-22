@@ -10,6 +10,7 @@ const projectManager = {};
 projectManager.curProjects = [];
 
 projectManager.curRoot = "";
+projectManager.curScry = {};
 
 projectManager.setProjects = function (files) {
   this.curProjects = [...files];
@@ -41,16 +42,19 @@ projectManager.createScry = function () {
   }
 
   fs.writeFileSync(this.curRoot + ".scry", JSON.stringify(buildScry, null, 2));
+  this.curScry = buildScry;
   return buildScry;
 };
 
 projectManager.getScry = function () {
   const scry = JSON.parse(fs.readFileSync(this.curRoot + ".scry"));
   if (verifyScry(scry)) {
+    this.curScry = scry;
     return scry;
   } else {
     console.log("REBUILDING SCRY");
-    return this.createScry();
+    this.curScry = this.createScry();
+    return this.curScry;
   }
 };
 

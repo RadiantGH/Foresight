@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const path = require("path");
 const projectRouter = require("./Routes/projects");
+const foresightRouter = require("./Routes/foresight");
 const { application } = require("express");
 
 const preferencesManager = require('./preferencesManager');
@@ -17,7 +18,7 @@ app.get('/', (req, res) => res.status(200).sendFile(path.join(__dirname, '../cli
 
 //Routing
 app.use('/projects', projectRouter);
-
+app.use('/foresight', foresightRouter);
 app.get('/refresh', (req, res) => res.json(projectManager.createScry()));
 
 //Error handler
