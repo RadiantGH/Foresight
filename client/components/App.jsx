@@ -6,9 +6,10 @@ class App extends Component {
     // call super
     super();
 
-    this.state = { projects: [], curProject: '', curDirectory: '', scry: {}};
+    this.state = { projects: [], curProject: '', curDirectory: '', scry: {}, fileTree: {}};
 
     this.openProject = this.openProject.bind(this);
+    this.openFolder = this.openFolder.bind(this);
   }
 
   componentDidMount() {
@@ -49,33 +50,63 @@ class App extends Component {
     else if(this.state.curProject !== '') { //Currently browsing project!!
         const scry = this.state.scry;
         const paths = Object.keys(scry);
-        const showFiles = [];
         const curDirectory = this.state.curDirectory;
 
+        const showFolders = [];
+        const showFiles = [];
+
+        const splitDirectory = curDirectory.split('\\');
+        let dirObj = this.state.fileTree;
+        //Getting which folders to put in file
+        for(let i = 0; i < splitDirectory.length; i++) {
+            const folder = splitDirectory[i];
+
+            if(folder === '' || folder === undefined) continue;
+
+            if(dirObj[folder]) {
+                dirObj = dirObj[folder];
+            }
+            else {
+                console.log('INVALID DIRECTORY FOUND AT: ' + this.state.curDirectory);
+            }
+        }
+        
+        const dirObjNames = Object.keys(dirObj);
+        for(let i = 0; i < dirObjNames.length; i++) {
+            showFolders.push(
+                <button id={dirObjNames[i]} onClick={this.openFolder}>FOLDER: {dirObjNames[i]}</button>
+            );
+        }
+
+        //Getting which files to put in folder
         for(let i = 0; i < paths.length; i++) {
             const key = paths[i];
             const fullPath = scry[key];
             const splitPath = fullPath.split('\\');
             const fileName = splitPath.pop();
             const joinedPath = splitPath.join('\\');
+            
+            if(curDirectory !== '') joinedPath += '\\'; //Adding the extra slash when checking folders outside of root
 
-            console.log(curDirectory + ' vs ' + joinedPath);
+            console.log('Comparing: ' + curDirectory + ' vs ' + joinedPath);
             if(curDirectory === joinedPath) {
                 showFiles.push(
                     <p>{key}: {fileName}</p>
                 );
             }
             else {
-                showFiles.push(
-                    <p>NOT SHOWN: {joinedPath + fileName}</p>
-                );
+                // showFiles.push(
+                //     <p>NOT SHOWN: {joinedPath + fileName}</p>
+                // );
             }
-            
         }
 
         return (
         <div className="App">
             <p>{this.state.curProject + ' =>' + this.state.curDirectory}</p>
+            <div id='folder-container'>
+                {showFolders}
+            </div>
             <div id='file-container'>
                 {showFiles}
             </div>
@@ -99,6 +130,9 @@ class App extends Component {
         newState.curProject = data.root;
         newState.curDirectory = '';
         newState.scry = data.scry;
+        newState.fileTree = data.fileTree;
+
+        console.log('File Tree: ' + '\nroot: ' + data.root + '(implied): ', newState.fileTree);
 
         console.log('NEW SCRY SET: ' + newState.scry);
         this.setState(newState);
@@ -120,6 +154,16 @@ class App extends Component {
       .catch((error) => {
         console.log('Recieved errror: ' + error);
       });
+  }
+
+  openFolder(eventData) {
+    const folderName = eventData.target.id;
+    const curDirectory = this.state.curDirectory;
+    const newDirectory = curDirectory + folderName + '\\';
+
+    console.log('Changing directory from: ' + curDirectory + ' to ' + newDirectory);
+
+    this.setState({curDirectory: newDirectory});
   }
 
   backButton(eventData) {

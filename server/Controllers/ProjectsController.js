@@ -43,6 +43,8 @@ projectController.getProjectData = (req, res, next) => {
             res.locals.projectData.scry = projectManager.createScry();
         }
 
+        res.locals.projectData.fileTree = projectManager.getFileTree(res.locals.projectData.scry);
+
         res.locals.projectData.root = projName;
         return next();
     });
