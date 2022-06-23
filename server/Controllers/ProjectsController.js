@@ -76,23 +76,25 @@ projectController.setToPaths = (req, res, next) => {
     projectManager.getScripts();
     const scripts = [...projectManager.scripts];
 
+    // console.log(scripts);
+    // return;
+
     const curScry = projectManager.curScry;
     const keys = Object.keys(curScry);
     for(let i = 0; i < scripts.length; i++) {
         let content = fs.readFileSync(scripts[i]);
-        console.log('OLD CONTENT: ', content.toString());
         let newContent = content;
+        // console.log('Checking: ' + scripts[i]);
 
         for(let b = 0; b < keys.length; b++) {
             const k = keys[b];
             const dir = curScry[k];
-
-            newContent = newContent.toString().replace(getKeyLink(k), projectManager.curRoot + dir);
+            
+            newContent = newContent.toString().replace(getKeyLink(k), dir.replace('\\', '\\\\'));
         }
         
         fs.writeFileSync(scripts[i], newContent);
         content = fs.readFileSync(scripts[i]);
-        console.log('NEW CONTENT: ' + content);
     }
     next();
 }
@@ -102,23 +104,24 @@ projectController.setToKeys = (req, res, next) => {
     projectManager.getScripts();
     const scripts = [...projectManager.scripts];
 
+    // console.log(scripts);
+    // return;
+
     const curScry = projectManager.curScry;
     const keys = Object.keys(curScry);
     for(let i = 0; i < scripts.length; i++) {
         let content = fs.readFileSync(scripts[i]);
-        console.log('OLD CONTENT: ', content.toString());
         let newContent = content;
+        // console.log('Checking: ' + scripts[i]);
 
         for(let b = 0; b < keys.length; b++) {
             const k = keys[b];
             const dir = curScry[k];
-            
-            newContent = newContent.toString().replace(projectManager.curRoot + dir, getKeyLink(k));
+            newContent = newContent.toString().replace(dir.replace('\\', '\\\\'), getKeyLink(k));
         }
 
         fs.writeFileSync(scripts[i], newContent);
         content = fs.readFileSync(scripts[i]);
-        console.log('NEW CONTENT: ' + content);
     }
     next();
 }

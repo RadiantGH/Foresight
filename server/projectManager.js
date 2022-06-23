@@ -102,14 +102,28 @@ projectManager.scripts = [];
 projectManager.getScripts = function (dir = this.curRoot) {
   fs.readdirSync(dir).forEach((file) => {
     const abs = path.join(dir, file);
+    const fname = file.toString();
+    if(fname.includes('node-')) console.log('Node modules?: ' + file);
 
-    if(ignoring(file)) return;
-
-    if (fs.statSync(abs).isDirectory()) return this.getScripts(abs);
-    else if (canEdit(abs)) return this.scripts.push(abs);
-    else return;
+    if(!ignoring(fname)) {
+      if (fs.statSync(abs).isDirectory()) return this.getScripts(abs);
+      else if (canEdit(abs)) return this.scripts.push(abs);
+      else return;
+    }
+    else {
+      // console.log('IGNORING: ' + fname);
+    }
   });
 };
+
+// projectManager.getScripts = function (dir = this.curRoot) {
+//   fs.readdirSync(dir).forEach((file) => {
+//       const abs = path.join(dir, file);
+//       const fname = file.toString();
+//       this.scripts.push(file);
+//     }
+//   );
+// };
 
 const verifyScry = function (scry) {
   return true;

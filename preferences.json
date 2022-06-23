@@ -3,6 +3,6 @@
     "darkMode": true,
     "fileExtensions": [".jpg", ".jpeg", ".gif", ".png", ".svg", ".ico"],
     "editOK": [".js", ".jsx", ".html", ".css"],
-    "ignore": ["node-modules", "dist", ".git", "package-lock.json", "package.json", "docs"],
+    "ignore": ["node-modules", "node_modules", "dist", ".git", "package-lock.json", "package.json", "docs"],
     "port": 5151
 }
