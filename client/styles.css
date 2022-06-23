@@ -1,4 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Asul&family=Open+Sans&display=swap');
+
 body {
-    color: lightgray;
-    background-color: darkslategray;
+    color: #ffff;
+    background-color: #282b30;
+    
+    font-family: 'Open Sans', sans-serif;
+}
+
+.app-header {
+    color: #0DCAFF;
+    font-family: 'Asul', sans-serif;
+}
+
+.credit {
+    color: white;
+    font-size: 8px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.project-finder {
+    background-color: #1e2124;
+}
+
+.project-button {
+    color: #ffff;
+    background-color: #282b30;
 }

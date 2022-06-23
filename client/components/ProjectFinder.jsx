@@ -22,7 +22,7 @@ const ProjectFinder = (props) => {
     );
   }
 
-  return <div className="project-finder">{projectItems}</div>;
+  return <div className='project-finder'>{projectItems}</div>;
 };
 
 export default ProjectFinder;

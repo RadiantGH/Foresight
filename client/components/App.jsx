@@ -63,25 +63,31 @@ class App extends Component {
     } else if (this.state.curProject !== "") {
       //Currently browsing project!!
       subRender = (
-        <ProjectViewport
-          scry={this.state.scry}
-          fileTree={this.state.fileTree}
-          curDirectory={this.state.curDirectory}
-          curProject={this.state.curProject}
-          getLink={this.getLink}
-          toPaths={this.setToPaths}
-          toKeys={this.setToKeys}
-          backButton={this.backButton}
-          openFolder={this.openFolder}
-          dragStart={this.onDragStart}
-          dragOver={this.onDragOver}
-          dragEnter={this.onDragEnter}
-          drop={this.onDragOver}
-          dragEnd={this.onDragEnd}
-          dragLeave={this.onDragLeave}
-          moveUp={this.moveFileUp}
-          renameKey={this.renameKeyConfirm}
-        />
+        <>
+            <ProjectFinder
+            projects={this.state.projects}
+            openProject={this.openProject}
+            />
+            <ProjectViewport
+            scry={this.state.scry}
+            fileTree={this.state.fileTree}
+            curDirectory={this.state.curDirectory}
+            curProject={this.state.curProject}
+            getLink={this.getLink}
+            toPaths={this.setToPaths}
+            toKeys={this.setToKeys}
+            backButton={this.backButton}
+            openFolder={this.openFolder}
+            dragStart={this.onDragStart}
+            dragOver={this.onDragOver}
+            dragEnter={this.onDragEnter}
+            drop={this.onDragOver}
+            dragEnd={this.onDragEnd}
+            dragLeave={this.onDragLeave}
+            moveUp={this.moveFileUp}
+            renameKey={this.renameKeyConfirm}
+            />
+        </>
       );
     } else {
       //Please wait
