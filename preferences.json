@@ -1,5 +1,7 @@
 {
     "projectPath": "C:\\Users\\iangr\\Desktop\\Projects\\",
     "darkMode": true,
-    "fileExtensions": [".jpg", ".jpeg", ".gif", ".png", ".svg", ".ico"]
+    "fileExtensions": [".jpg", ".jpeg", ".gif", ".png", ".svg", ".ico"],
+    "editOK": [".js", ".jsx", ".html", ".css", ".json"],
+    "ignore": ["node-modules", "dist", ".git", "package-lock.json", "package.json"]
 }
