@@ -70,4 +70,20 @@ projectController.renameKey = (req, res, next) => {
     return next();
 }
 
+projectController.setToPaths = (req, res, next) => {
+    projectManager.scripts = [];
+    projectManager.getScripts();
+    const scripts = [...projectManager.scripts];
+
+    next();
+}
+
+projectController.setToKeys = (req, res, next) => {
+    projectManager.scripts = [];
+    projectManager.getScripts();
+    const scripts = [...projectManager.scripts];
+
+    next();
+}
+
 module.exports = projectController;

@@ -26,4 +26,14 @@ router.post('/rename', projectController.renameKey, (req, res, next) => {
     res.json(res.locals.newScry);
 });
 
+router.post('/toPaths', projectController.setToPaths, (req, res, next) => {
+    res.status(200);
+    res.send('Successfuly changed scripts to paths!');
+});
+
+router.post('/toKeys', projectController.setToKeys, (req, res, next) => {
+    res.status(200);
+    res.send('Successfuly changed scripts to keys!');
+});
+
 module.exports = router;

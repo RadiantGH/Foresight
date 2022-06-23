@@ -9,7 +9,7 @@ const projectManager = {};
 
 projectManager.curProjects = [];
 
-projectManager.curRoot = "";
+projectManager.curRoot = '';
 projectManager.curScry = {};
 
 projectManager.setProjects = function (files) {
@@ -98,6 +98,19 @@ projectManager.renameKey = function(oldKey, newKey) {
   return this.curScry;
 }
 
+projectManager.scripts = [];
+projectManager.getScripts = function (dir = this.curRoot) {
+  fs.readdirSync(dir).forEach((file) => {
+    const abs = path.join(dir, file);
+
+    if(ignoring(file)) return;
+
+    if (fs.statSync(abs).isDirectory()) return this.getScripts(abs);
+    else if (canEdit(abs)) return this.scripts.push(abs);
+    else return;
+  });
+};
+
 const verifyScry = function (scry) {
   return true;
 };
@@ -106,6 +119,7 @@ const recursiveScry = function (dir) {
   fs.readdirSync(dir).forEach((file) => {
     const abs = path.join(dir, file);
 
+    if(ignoring(file)) return;
     if (fs.statSync(abs).isDirectory()) return recursiveScry(abs);
     else if (isScryable(abs)) return newScry.push(abs);
     else return;
@@ -115,6 +129,14 @@ const recursiveScry = function (dir) {
 const isScryable = function (dir) {
   return preferencesManager.fileExtensions.includes(path.extname(dir));
 };
+
+const canEdit = function (dir) {
+  return preferencesManager.editOK.includes(path.extname(dir));
+}
+
+const ignoring = function (file) {
+  return preferencesManager.ignore.includes(file);
+}
 
 const randomInt = () => Math.floor(Math.random() * 10);
 const scryKeyMaker = function () {
