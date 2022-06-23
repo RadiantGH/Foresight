@@ -219,7 +219,7 @@ class App extends Component {
         newPath = pathBase + `${fileName}-${i}${extension}`;
       }
 
-      const sendData = { old: oldPath, new: newPath };
+      const sendData = { key: key, old: oldPath, new: newPath };
       
       console.log(oldPath + " will become " + newPath);
 

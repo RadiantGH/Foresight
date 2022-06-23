@@ -81,9 +81,11 @@ projectManager.getFileTree = function (scry) {
   return fileTree;
 };
 
-projectManager.modifyScry = function () {
-  // const scry = JSON.parse(fs.readFileSync(this.curRoot + '.scry'));
-  // return scry;
+projectManager.modifyScry = function (key, newVal) {
+  this.curScry[key] = newVal;
+
+  fs.writeFileSync(this.curRoot + ".scry", JSON.stringify(this.curScry, null, 2));
+  return this.curScry;
 };
 
 const verifyScry = function (scry) {

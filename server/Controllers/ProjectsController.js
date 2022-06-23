@@ -60,7 +60,7 @@ projectController.moveFile = (req, res, next) => {
     fs.rename(oldFilepath, newFilepath, function (err) {
         if (err)  return next({message: {err: 'Failed to move file to: ' + newFilepath}});
         
-        res.locals.newScry = projectManager.createScry();
+        res.locals.newScry = projectManager.modifyScry(body.key, body.new);
         return next();
     })
 };
