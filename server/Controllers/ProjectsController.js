@@ -75,6 +75,24 @@ projectController.setToPaths = (req, res, next) => {
     projectManager.getScripts();
     const scripts = [...projectManager.scripts];
 
+    const curScry = projectManager.curScry;
+    const keys = Object.keys(curScry);
+    for(let i = 0; i < scripts.length; i++) {
+        let content = fs.readFileSync(scripts[i]);
+        console.log('OLD CONTENT: ', content.toString());
+        let newContent = content;
+
+        for(let b = 0; b < keys.length; b++) {
+            const k = keys[b];
+            const dir = curScry[k];
+
+            newContent = newContent.toString().replace(getKeyLink(k), projectManager.curRoot + dir);
+        }
+        
+        fs.writeFileSync(scripts[i], newContent);
+        content = fs.readFileSync(scripts[i]);
+        console.log('NEW CONTENT: ' + content);
+    }
     next();
 }
 
@@ -83,7 +101,29 @@ projectController.setToKeys = (req, res, next) => {
     projectManager.getScripts();
     const scripts = [...projectManager.scripts];
 
+    const curScry = projectManager.curScry;
+    const keys = Object.keys(curScry);
+    for(let i = 0; i < scripts.length; i++) {
+        let content = fs.readFileSync(scripts[i]);
+        console.log('OLD CONTENT: ', content.toString());
+        let newContent = content;
+
+        for(let b = 0; b < keys.length; b++) {
+            const k = keys[b];
+            const dir = curScry[k];
+            
+            newContent = newContent.toString().replace(projectManager.curRoot + dir, getKeyLink(k));
+        }
+
+        fs.writeFileSync(scripts[i], newContent);
+        content = fs.readFileSync(scripts[i]);
+        console.log('NEW CONTENT: ' + content);
+    }
     next();
+}
+
+const getKeyLink = function(key) {
+    return 'http://localhost:' + preferencesManager.port + '/foresight/' + key;
 }
 
 module.exports = projectController;

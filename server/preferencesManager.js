@@ -8,6 +8,7 @@ preferencesManager.darkMode = true;
 preferencesManager.fileExtensions = [];
 preferencesManager.editOK = [];
 preferencesManager.ignore = [];
+preferencesManager.port = 3000;
 
 preferencesManager.getPreferences = function(preferencesPath) {
     this.prefPath = preferencesPath;
@@ -17,6 +18,7 @@ preferencesManager.getPreferences = function(preferencesPath) {
     this.fileExtensions = pref.fileExtensions;
     this.editOK = pref.editOK;
     this.ignore = pref.ignore;
+    this.port = pref.port;
 };
 
 preferencesManager.savePreferences = function() {
