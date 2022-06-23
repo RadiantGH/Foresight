@@ -14,6 +14,10 @@ class ProjectViewport extends Component {
       curProject
       
       functions:
+      getLink
+      toPaths
+      toKeys
+
       backButton
       openFolder
 
@@ -82,6 +86,7 @@ class ProjectViewport extends Component {
                   <ProjectMedia
                   foresightKey={key}
                   name={fileName}
+                  getLink={this.props.getLink}
                   dragStart={this.props.dragStart}
                   dragEnd={this.props.dragEnd}
                   moveUp={this.props.moveUp}
@@ -102,6 +107,8 @@ class ProjectViewport extends Component {
           curDirectory={this.props.curDirectory}
           curProject={this.props.curProject}
           backButton={this.props.backButton}
+          toPaths={this.props.toPaths}
+          toKeys={this.props.toKeys}
           />
 
           <div id='folder-container'>

@@ -6,6 +6,7 @@ const projectController = require('../Controllers/ProjectsController');
 const preferencesManager = require('../preferencesManager');
 const projectManager = require('../projectManager');
 
+
 router.get('/', projectController.getFolderNames, (req, res) => {
     res.status(200);
     res.json(res.locals.folderNames);
@@ -35,5 +36,7 @@ router.post('/toKeys', projectController.setToKeys, (req, res, next) => {
     res.status(200);
     res.send('Successfuly changed scripts to keys!');
 });
+
+
 
 module.exports = router;

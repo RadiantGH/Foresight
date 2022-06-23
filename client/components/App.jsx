@@ -3,7 +3,7 @@ import ProjectViewport from "./Project/ProjectViewport.jsx";
 import ProjectFinder from "./ProjectFinder.jsx";
 import AppHeader from "./AppHeader.jsx";
 
-const port = 3000;
+const port = 5151;
 class App extends Component {
   constructor() {
     // call super
@@ -18,6 +18,10 @@ class App extends Component {
     };
 
     this.storage = {};
+
+    this.getLink = this.getLink.bind(this);
+    this.setToPaths = this.setToPaths.bind(this);
+    this.setToKeys = this.setToKeys.bind(this);
 
     this.openProject = this.openProject.bind(this);
     this.openFolder = this.openFolder.bind(this);
@@ -64,6 +68,9 @@ class App extends Component {
           fileTree={this.state.fileTree}
           curDirectory={this.state.curDirectory}
           curProject={this.state.curProject}
+          getLink={this.getLink}
+          toPaths={this.setToPaths}
+          toKeys={this.setToKeys}
           backButton={this.backButton}
           openFolder={this.openFolder}
           dragStart={this.onDragStart}
@@ -90,7 +97,7 @@ class App extends Component {
   }
 
   openProject(eventData) {
-    fetch(`http://localhost:${port}/projects` + eventData.target.id)
+    fetch(`http://localhost:${port}/projects/${eventData.target.id}`)
       .then((response) => response.json())
       .then((data) => {
         const newState = {};
@@ -120,6 +127,38 @@ class App extends Component {
       })
       .catch((error) => {
         console.log("Recieved errror: " + error);
+      });
+  }
+
+  getLink(eventData, k) {
+    const link = `http://localhost:${port}/foresight/${k}`;
+    eventData.target.textContent = "Copied Link!";
+    navigator.clipboard.writeText(link);
+  }
+
+  setToPaths(eventData) {
+    fetch(`http://localhost:${port}/projects/toPaths`, {
+        method: "POST"
+      })
+      .then((response) => response.toString())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log('Error trying to set to paths...', error);
+      });
+  }
+
+  setToKeys(eventData) {
+    fetch(`http://localhost:${port}/projects/toKeys`, {
+        method: "POST"
+      })
+      .then((response) => response.toString())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log('Error trying to set to keys...', error);
       });
   }
 
@@ -197,7 +236,7 @@ class App extends Component {
 
       console.log(oldPath + " will become " + newPath);
 
-      fetch(`http://localhost:${port}/projects/move`, {
+      fetch(`http://localhost:${port}/projects/move/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -216,12 +255,16 @@ class App extends Component {
 
   renameKeyConfirm(eventData, oldKey) {
     const newKey = eventData.target.textContent;
-    if(Object.keys(this.state.scry).includes(newKey)) {
-        eventData.target.textContent = oldKey;
-        console.log('Cannot set key to ' + newKey + ' because that key already exists in our scry database!');
-        return;
+    if (Object.keys(this.state.scry).includes(newKey)) {
+      eventData.target.textContent = oldKey;
+      console.log(
+        "Cannot set key to " +
+          newKey +
+          " because that key already exists in our scry database!"
+      );
+      return;
     }
-    
+
     console.log(oldKey + " will become " + newKey);
     const sendData = { oldKey: oldKey, newKey: newKey };
 

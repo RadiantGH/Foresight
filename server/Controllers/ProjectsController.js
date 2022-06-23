@@ -21,6 +21,7 @@ projectController.getFolderNames = (req, res, next) => {
 };
 
 projectController.getProjectData = (req, res, next) => {
+    console.log('trying to get projects');
     const id = req.params.id;
     res.locals.projectData = {};
     const projName = projectManager.tryOpenProject(req.params.id);

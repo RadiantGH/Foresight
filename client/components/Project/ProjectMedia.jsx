@@ -7,6 +7,7 @@ const ProjectMedia = props => {
     name
 
     functions:
+    getLink
     dragStart
     dragEnd
     renameKey
@@ -30,7 +31,8 @@ const ProjectMedia = props => {
         // onInput={(eventData) => props.renameKey(eventData, props.foresightKey)}
         >{props.foresightKey}
         </span></h3></div>
-        <button onClick={(event) => props.moveUp(event, props.name, props.foresightKey)}>Move Up</button>
+        <button className='copy-link' onClick={(event) => props.getLink(event, props.foresightKey)}>Copy Link</button>
+        <button className='move-up' onClick={(event) => props.moveUp(event, props.name, props.foresightKey)}>Move Up</button>
         <img
             className='media-img'
             src={link+props.foresightKey}

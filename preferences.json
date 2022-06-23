@@ -4,5 +4,5 @@
     "fileExtensions": [".jpg", ".jpeg", ".gif", ".png", ".svg", ".ico"],
     "editOK": [".js", ".jsx", ".html", ".css"],
     "ignore": ["node-modules", "dist", ".git", "package-lock.json", "package.json", "docs"],
-    "port": 3000
+    "port": 5151
 }
