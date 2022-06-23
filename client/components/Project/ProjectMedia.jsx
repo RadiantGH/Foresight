@@ -34,7 +34,7 @@ const ProjectMedia = props => {
         <button className='move-up' onClick={(event) => props.moveUp(event, props.name, props.foresightKey)}>Move Up</button>
         <img
             className='media-img'
-            src={props.getLink(udefined, props.foresightKey)}
+            src={props.getLink(undefined, props.foresightKey)}
             alt={props.name}
             width='300'
             height='600'
