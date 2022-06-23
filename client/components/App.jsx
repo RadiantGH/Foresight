@@ -70,6 +70,7 @@ class App extends Component {
           drop={this.onDragOver}
           dragEnd={this.onDragEnd}
           dragLeave={this.onDragLeave}
+          moveUp={this.moveFileUp}
         />
       );
     } else {
@@ -158,8 +159,57 @@ class App extends Component {
     }
   }
 
-  moveFileUp(eventData) {
-    //Moves a file up one folder
+  moveFileUp(eventData, fileName, key) {
+    if (this.state.curDirectory === '') {
+      console.log("Cannot move a file up from the root!");
+    }
+    else {
+      const curDirectory = this.state.curDirectory;
+
+      const fullPath = this.state.scry[key];
+      const splitPath = fullPath.split("\\");
+      let fileName = splitPath.pop();
+      splitPath.pop(); //Pop again to move up a folder
+      let pathBase = splitPath.join("\\");
+
+      console.log('SPLIT PATH: ', splitPath);
+      
+      if (splitPath.length > 0) pathBase += "\\"; //Adding the extra slash when checking folders outside of root
+      
+      const oldPath = fullPath;
+
+      const splitFilename = fileName.split(".");
+      fileName = splitFilename[0];
+      let extension = "." + splitFilename[1];
+      let newPath = pathBase + fileName + extension;
+
+      const vals = Object.values(this.state.scry);
+      let i = 0;
+      while (vals.includes(newPath)) {
+        i++;
+        console.log("Duplicate path detected!");
+        newPath = pathBase + `${fileName}-${i}${extension}`;
+      }
+
+      const sendData = { key: key, old: oldPath, new: newPath };
+
+      console.log(oldPath + " will become " + newPath);
+
+      fetch("http://localhost:3000/projects/move/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(sendData),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          this.setState({ scry: data });
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
   }
 
   // Drag
@@ -206,21 +256,21 @@ class App extends Component {
 
       const oldPath = fullPath;
       const pathBase = joinedPath + folder + "\\";
-      const splitFilename = fileName.split('.');
+      const splitFilename = fileName.split(".");
       fileName = splitFilename[0];
-      let extension = '.' + splitFilename[1];
+      let extension = "." + splitFilename[1];
       let newPath = pathBase + fileName + extension;
 
       const vals = Object.values(this.state.scry);
       let i = 0;
-      while(vals.includes(newPath)) {
+      while (vals.includes(newPath)) {
         i++;
-        console.log('Duplicate path detected!');
+        console.log("Duplicate path detected!");
         newPath = pathBase + `${fileName}-${i}${extension}`;
       }
 
       const sendData = { key: key, old: oldPath, new: newPath };
-      
+
       console.log(oldPath + " will become " + newPath);
 
       fetch("http://localhost:3000/projects/move/", {
@@ -232,8 +282,7 @@ class App extends Component {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Success:", data);
-          this.setState({scry: data});
+          this.setState({ scry: data });
         })
         .catch((error) => {
           console.error("Error:", error);

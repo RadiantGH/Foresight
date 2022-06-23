@@ -16,7 +16,8 @@ const ProjectMedia = props => {
     onDragEnd={props.dragEnd}
     draggable
     >
-        <p>{props.foresightKey}</p>
+        <p>{props.foresightKey + ' & ' + props.name}</p>
+        <button onClick={(event) => props.moveUp(event, props.name, props.foresightKey)}>Move Up</button>
         <img
             className='media-img'
             src={link+props.foresightKey}
