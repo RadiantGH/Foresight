@@ -17,7 +17,7 @@ const ProjectMedia = props => {
     onDragEnd={props.dragEnd}
     draggable
     >
-        <h3><span
+        <div className='editable-key'><h3><span
         contentEditable
         spellCheck="false"
         onKeyPress={(eventData) => {
@@ -28,7 +28,8 @@ const ProjectMedia = props => {
             }
         }}
         // onInput={(eventData) => props.renameKey(eventData, props.foresightKey)}
-        >{props.foresightKey}</span></h3>
+        >{props.foresightKey}
+        </span></h3></div>
         <button onClick={(event) => props.moveUp(event, props.name, props.foresightKey)}>Move Up</button>
         <img
             className='media-img'

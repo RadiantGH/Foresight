@@ -12,6 +12,8 @@ const projectManager = require('./projectManager');
 const preferencesPath = path.resolve(__dirname, '../preferences.json');
 preferencesManager.getPreferences(preferencesPath);
 
+const port = 3000;
+
 app.use(bodyParser.json());
 app.use('/dist', express.static(path.join(__dirname, '../dist')));
 app.get('/', (req, res) => res.status(200).sendFile(path.join(__dirname, '../client/index.html')));
@@ -34,4 +36,4 @@ app.use((err, req, res, next) => {
   return res.status(errorObj.status).json(errorObj.message);
 });
 
-app.listen(3000);
+app.listen(port);

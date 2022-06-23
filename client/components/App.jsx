@@ -3,6 +3,7 @@ import ProjectViewport from "./Project/ProjectViewport.jsx";
 import ProjectFinder from "./ProjectFinder.jsx";
 import AppHeader from "./AppHeader.jsx";
 
+const port = 3000;
 class App extends Component {
   constructor() {
     // call super
@@ -34,7 +35,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:3000/projects")
+    fetch(`http://localhost:${port}/projects`)
       .then((response) => response.json())
       .then((data) => {
         this.setState({ projects: [...data] });
@@ -89,7 +90,7 @@ class App extends Component {
   }
 
   openProject(eventData) {
-    fetch("http://localhost:3000/projects/" + eventData.target.id)
+    fetch(`http://localhost:${port}/projects` + eventData.target.id)
       .then((response) => response.json())
       .then((data) => {
         const newState = {};
@@ -109,7 +110,7 @@ class App extends Component {
   }
 
   refreshScry() {
-    fetch("http://localhost:3000/refresh/")
+    fetch(`http://localhost:${port}/refresh`)
       .then((response) => response.json())
       .then((data) => {
         const newState = { scry: data };
@@ -134,7 +135,7 @@ class App extends Component {
 
     if (curDirectory === "") {
       //Go back to project select!
-      fetch("http://localhost:3000/projects")
+      fetch(`http://localhost:${port}/projects`)
         .then((response) => response.json())
         .then((data) => {
           this.setState({ curProject: "", projects: [...data] });
@@ -196,7 +197,7 @@ class App extends Component {
 
       console.log(oldPath + " will become " + newPath);
 
-      fetch("http://localhost:3000/projects/move/", {
+      fetch(`http://localhost:${port}/projects/move`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -224,7 +225,7 @@ class App extends Component {
     console.log(oldKey + " will become " + newKey);
     const sendData = { oldKey: oldKey, newKey: newKey };
 
-    fetch("http://localhost:3000/projects/rename/", {
+    fetch(`http://localhost:${port}/projects/rename/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -301,7 +302,7 @@ class App extends Component {
 
       console.log(oldPath + " will become " + newPath);
 
-      fetch("http://localhost:3000/projects/move/", {
+      fetch(`http://localhost:${port}/projects/move/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
