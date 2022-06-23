@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import ProjectPreview from "./ProjectPreview.jsx";
-import Btn_Back from "./Btn_Back.jsx";
+import ProjectViewport from "./Project/ProjectViewport.jsx";
+import ProjectFinder from "./ProjectFinder.jsx";
+import AppHeader from "./AppHeader.jsx";
 
 class App extends Component {
   constructor() {
@@ -27,102 +28,41 @@ class App extends Component {
 
 
   render() {
-    //LOOKING FOR PROJECT!!!
-    if(this.state.curProject === '' && this.state.projects.length > 0) {
-        const projectItems = [];
-        for (let i = 0; i < this.state.projects.length; i++) {
-        projectItems.push(
-            <ProjectPreview
-            clickHandler={this.openProject}
-            projectName={this.state.projects[i]}
-            index={i}
-            />
-        );
-        }
+    let subRender;
 
-        return (
-        <div className="App">
-            <header className="App-header">
-            <p>TEST</p>
-            {projectItems}
-            </header>
-        </div>
+    if(this.state.curProject === '' && this.state.projects.length > 0) { //LOOKING FOR PROJECT!!!
+        subRender = (
+            <ProjectFinder
+                projects={this.state.projects}
+                openProject={this.openProject}
+            />
         );
     }
     else if(this.state.curProject !== '') { //Currently browsing project!!
-        const scry = this.state.scry;
-        const paths = Object.keys(scry);
-        const curDirectory = this.state.curDirectory;
+        subRender = (
+        <ProjectViewport
+            scry={this.state.scry}
+            fileTree={this.state.fileTree}
+            curDirectory={this.state.curDirectory}
+            curProject={this.state.curProject}
 
-        const showFolders = [];
-        const showFiles = [];
-
-        const splitDirectory = curDirectory.split('\\');
-        let dirObj = this.state.fileTree;
-        //Getting which folders to put in file
-        for(let i = 0; i < splitDirectory.length; i++) {
-            const folder = splitDirectory[i];
-
-            if(folder === '' || folder === undefined) continue;
-
-            if(dirObj[folder]) {
-                dirObj = dirObj[folder];
-            }
-            else {
-                console.log('INVALID DIRECTORY FOUND AT: ' + this.state.curDirectory);
-            }
-        }
-        
-        const dirObjNames = Object.keys(dirObj);
-        for(let i = 0; i < dirObjNames.length; i++) {
-            showFolders.push(
-                <button id={dirObjNames[i]} onClick={this.openFolder}>FOLDER: {dirObjNames[i]}</button>
-            );
-        }
-
-        //Getting which files to put in folder
-        for(let i = 0; i < paths.length; i++) {
-            const key = paths[i];
-            const fullPath = scry[key];
-            const splitPath = fullPath.split('\\');
-            const fileName = splitPath.pop();
-            const joinedPath = splitPath.join('\\');
-            
-            if(curDirectory !== '') joinedPath += '\\'; //Adding the extra slash when checking folders outside of root
-
-            // console.log('Comparing: ' + curDirectory + ' vs ' + joinedPath);
-            if(curDirectory === joinedPath) {
-                showFiles.push(
-                    <p>{key}: {fileName}</p>
-                );
-            }
-            else {
-                // showFiles.push(
-                //     <p>NOT SHOWN: {joinedPath + fileName}</p>
-                // );
-            }
-        }
-
-        return (
-        <div className="App">
-            <p>{this.state.curProject + ' =>' + this.state.curDirectory}</p>
-            <Btn_Back clickHandler={this.backButton}/>
-            <div id='folder-container'>
-                {showFolders}
-            </div>
-            <div id='file-container'>
-                {showFiles}
-            </div>
-        </div>
+            backButton={this.backButton}
+            openFolder={this.openFolder}
+        />
         );
     }
     else { //Please wait
-        return (
-        <div className="App">
-            <p>PLEASE WAIT!</p>
-        </div>
+        subRender = (
+        <h1>Please wait...</h1>    
         );
     }
+
+    return (
+        <div className='App'>
+            <AppHeader/>
+            {subRender}
+        </div>
+    );
   }
 
   openProject(eventData) {
