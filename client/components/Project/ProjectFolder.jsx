@@ -6,11 +6,22 @@ const ProjectFolder = props => {
 
     functions:
     openFolder
+    dragOver
+    drop
+    dragEnter
+    dragLeave
     */
    console.log('trying to render folder: ' + props.folderName);
    return (
     <div className='project-folder'>
-        <button id={props.folderName} onClick={props.openFolder}>FOLDER: {props.folderName}</button>
+        <button
+            id={props.folderName}
+            onClick={props.openFolder}
+            className='project-folder'
+            onDragOver={props.dragOver}
+            onDragEnter={(event) => props.dragEnter(event, props.folderName)}
+            onDragLeave={props.dragLeave}
+        >FOLDER: {props.folderName}</button>
     </div>
   );
 }

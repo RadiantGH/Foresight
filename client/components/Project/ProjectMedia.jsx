@@ -5,9 +5,17 @@ const ProjectMedia = props => {
     /* Props:
     foresightKey
     name
+
+    functions:
+    dragStart
+    dragEnd
     */
    return (
-    <div className='project-media'>
+    <div className='project-media'
+    onDragStart = {(event) => props.dragStart(event, props.foresightKey)}
+    onDragEnd={props.dragEnd}
+    draggable
+    >
         <p>{props.foresightKey}</p>
         <img
             className='media-img'

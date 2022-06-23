@@ -16,12 +16,15 @@ class ProjectViewport extends Component {
       functions:
       backButton
       openFolder
+
+      dragStart
+      dragOver
+      drop
+      dragEnter
       */
     }
 
     render() {
-      console.log('VIEWPORT PROPS: ', this.props);
-
       const scry = this.props.scry;
       const paths = Object.keys(scry);
       const curDirectory = this.props.curDirectory;
@@ -48,7 +51,15 @@ class ProjectViewport extends Component {
       const dirObjNames = Object.keys(dirObj);
       for(let i = 0; i < dirObjNames.length; i++) {
           showFolders.push(
-            <ProjectFolder folderName={dirObjNames[i]} openFolder={this.props.openFolder}/>
+            <ProjectFolder
+            folderName={dirObjNames[i]}
+            openFolder={this.props.openFolder}
+            dragOver={this.props.dragOver}
+            drop={this.props.drop}
+            dragEnter={this.props.dragEnter}
+            dragEnd={this.props.dragEnd}
+            dragLeave={this.props.dragLeave}
+            />
           );
       }
 
@@ -65,7 +76,7 @@ class ProjectViewport extends Component {
           // console.log('Comparing: ' + curDirectory + ' vs ' + joinedPath);
           if(curDirectory === joinedPath) {
               showFiles.push(
-                  <ProjectMedia foresightKey={key} name={fileName}/>
+                  <ProjectMedia foresightKey={key} name={fileName} dragStart={this.props.dragStart} dragEnd={this.props.dragEnd}/>
               );
           }
           else {
