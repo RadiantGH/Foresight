@@ -132,8 +132,13 @@ class App extends Component {
 
   getLink(eventData, k) {
     const link = `http://localhost:${port}/foresight/${k}`;
-    if(eventData) eventData.target.textContent = "Copied Link!";
-    navigator.clipboard.writeText(link);
+    if(eventData) {
+        eventData.target.textContent = "Copied Link!";
+        navigator.clipboard.writeText(link);
+    }
+    else {
+        return link;
+    }
   }
 
   setToPaths(eventData) {
