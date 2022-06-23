@@ -50,4 +50,19 @@ projectController.getProjectData = (req, res, next) => {
     });
 };
 
+projectController.moveFile = (req, res, next) => {
+    const body = req.body;
+
+    const curDirectory = projectManager.curRoot;
+    const oldFilepath = curDirectory + body.old;
+    const newFilepath = curDirectory + body.new;
+
+    fs.rename(oldFilepath, newFilepath, function (err) {
+        if (err)  return next({message: {err: 'Failed to move file to: ' + newFilepath}});
+        
+        res.locals.newScry = projectManager.createScry();
+        return next();
+    })
+};
+
 module.exports = projectController;

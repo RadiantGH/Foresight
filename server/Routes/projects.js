@@ -16,4 +16,9 @@ router.get('/:id', projectController.getProjectData, (req, res, next) => {
     res.json(res.locals.projectData);
 });
 
+router.post('/move', projectController.moveFile, (req, res, next) => {
+    res.status(200);
+    res.json(res.locals.newScry);
+});
+
 module.exports = router;

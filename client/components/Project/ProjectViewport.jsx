@@ -69,7 +69,7 @@ class ProjectViewport extends Component {
           const fullPath = scry[key];
           const splitPath = fullPath.split('\\');
           const fileName = splitPath.pop();
-          const joinedPath = splitPath.join('\\');
+          let joinedPath = splitPath.join('\\');
           
           if(curDirectory !== '') joinedPath += '\\'; //Adding the extra slash when checking folders outside of root
 

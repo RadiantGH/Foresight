@@ -11,7 +11,6 @@ const ProjectFolder = props => {
     dragEnter
     dragLeave
     */
-   console.log('trying to render folder: ' + props.folderName);
    return (
     <div className='project-folder'>
         <button

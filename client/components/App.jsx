@@ -13,7 +13,7 @@ class App extends Component {
       curProject: "",
       curDirectory: "",
       scry: {},
-      fileTree: {}
+      fileTree: {},
     };
 
     this.storage = {};
@@ -64,7 +64,6 @@ class App extends Component {
           curProject={this.state.curProject}
           backButton={this.backButton}
           openFolder={this.openFolder}
-
           dragStart={this.onDragStart}
           dragOver={this.onDragOver}
           dragEnter={this.onDragEnter}
@@ -124,11 +123,6 @@ class App extends Component {
     const folderName = eventData.target.id;
     const curDirectory = this.state.curDirectory;
     const newDirectory = curDirectory + folderName + "\\";
-
-    console.log(
-      "Changing directory from: " + curDirectory + " to " + newDirectory
-    );
-
     this.setState({ curDirectory: newDirectory });
   }
 
@@ -171,48 +165,81 @@ class App extends Component {
   // Drag
   onDragStart = (event, foresightKey) => {
     this.storage.curDrag = foresightKey;
-    this.storage.curFolder = '';
-    console.log("dragstart on div: ", foresightKey);
+    this.storage.curFolder = "";
   };
 
   onDragEnter = (event, folderName) => {
     this.storage.curFolder = folderName;
-    console.log('Set folder name as ' + this.storage.curFolder + '\nInput: ' + folderName);
     event.preventDefault();
-  }
+  };
 
   onDragOver = (event, folderName) => {
     event.preventDefault();
   };
 
   onDragLeave = (event) => {
-    console.log('EMPTYING FOLDER');
-    this.storage.curFolder = '';
+    this.storage.curFolder = "";
     event.preventDefault();
-  }
+  };
 
   onDrop = (event, folderName) => {
-    const data = event.dataTransfer.getData("text/plain");
-    console.log('Dropped on ' + data);
     event.preventDefault();
-  }
+  };
 
   onDragEnd = (event) => {
-    if(this.storage.curFolder === '') {
-        console.log('Empty drop.');
+    if (this.storage.curFolder === "") {
+      this.storage.curDrag = "";
+    } else {
+      const key = this.storage.curDrag;
+      const folder = this.storage.curFolder;
+      const curDirectory = this.state.curDirectory;
 
-        this.storage.curDrag = '';
+      this.storage.curDrag = "";
+      this.storage.curFolder = "";
+
+      const fullPath = this.state.scry[key];
+      const splitPath = fullPath.split("\\");
+      let fileName = splitPath.pop();
+      let joinedPath = splitPath.join("\\");
+
+      if (curDirectory !== "") joinedPath += "\\"; //Adding the extra slash when checking folders outside of root
+
+      const oldPath = fullPath;
+      const pathBase = joinedPath + folder + "\\";
+      const splitFilename = fileName.split('.');
+      fileName = splitFilename[0];
+      let extension = '.' + splitFilename[1];
+      let newPath = pathBase + fileName + extension;
+
+      const vals = Object.values(this.state.scry);
+      let i = 0;
+      while(vals.includes(newPath)) {
+        i++;
+        console.log('Duplicate path detected!');
+        newPath = pathBase + `${fileName}-${i}${extension}`;
+      }
+
+      const sendData = { old: oldPath, new: newPath };
+      
+      console.log(oldPath + " will become " + newPath);
+
+      fetch("http://localhost:3000/projects/move/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(sendData),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+          this.setState({scry: data});
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     }
-    else {
-        console.log('dropped ' + this.storage.curDrag + ' on ' + this.storage.curFolder);
-
-        const key = this.storage.curDrag;
-        const folder = this.storage.curFolder;
-
-        this.storage.curDrag = '';
-        this.storage.curFolder = '';
-    }
-  }
+  };
 }
 
 export default App;
