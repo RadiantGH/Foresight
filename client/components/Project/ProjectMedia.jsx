@@ -19,6 +19,7 @@ const ProjectMedia = props => {
     >
         <h3><span
         contentEditable
+        spellCheck="false"
         onKeyPress={(eventData) => {
             if(eventData.key === 'Enter') {
                 props.renameKey(eventData, props.foresightKey);
