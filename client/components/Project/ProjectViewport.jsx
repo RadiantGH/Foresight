@@ -18,6 +18,7 @@ class ProjectViewport extends Component {
       openFolder
 
       moveUp
+      renameKey
 
       dragStart
       dragOver
@@ -78,7 +79,14 @@ class ProjectViewport extends Component {
           // console.log('Comparing: ' + curDirectory + ' vs ' + joinedPath);
           if(curDirectory === joinedPath) {
               showFiles.push(
-                  <ProjectMedia foresightKey={key} name={fileName} dragStart={this.props.dragStart} dragEnd={this.props.dragEnd} moveUp={this.props.moveUp}/>
+                  <ProjectMedia
+                  foresightKey={key}
+                  name={fileName}
+                  dragStart={this.props.dragStart}
+                  dragEnd={this.props.dragEnd}
+                  moveUp={this.props.moveUp}
+                  renameKey={this.props.renameKey}
+                  />
               );
           }
           else {

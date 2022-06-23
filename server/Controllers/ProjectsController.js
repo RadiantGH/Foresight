@@ -65,4 +65,9 @@ projectController.moveFile = (req, res, next) => {
     })
 };
 
+projectController.renameKey = (req, res, next) => {
+    res.locals.newScry = projectManager.renameKey(req.body.oldKey, req.body.newKey);
+    return next();
+}
+
 module.exports = projectController;

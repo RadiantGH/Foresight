@@ -9,6 +9,7 @@ const ProjectMedia = props => {
     functions:
     dragStart
     dragEnd
+    renameKey
     */
    return (
     <div className='project-media'
@@ -16,7 +17,17 @@ const ProjectMedia = props => {
     onDragEnd={props.dragEnd}
     draggable
     >
-        <p>{props.foresightKey + ' & ' + props.name}</p>
+        <h3><span
+        contentEditable
+        onKeyPress={(eventData) => {
+            if(eventData.key === 'Enter') {
+                props.renameKey(eventData, props.foresightKey);
+                eventData.target.blur();
+                eventData.preventDefault();
+            }
+        }}
+        // onInput={(eventData) => props.renameKey(eventData, props.foresightKey)}
+        >{props.foresightKey}</span></h3>
         <button onClick={(event) => props.moveUp(event, props.name, props.foresightKey)}>Move Up</button>
         <img
             className='media-img'

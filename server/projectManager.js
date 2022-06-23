@@ -88,6 +88,16 @@ projectManager.modifyScry = function (key, newVal) {
   return this.curScry;
 };
 
+projectManager.renameKey = function(oldKey, newKey) {
+  const val = this.curScry[oldKey];
+  delete this.curScry[oldKey];
+  this.curScry[newKey] = val;
+
+  console.log('deleted ' + oldKey + ' and replaced with ' + newKey + ' for ' + val);
+  fs.writeFileSync(this.curRoot + ".scry", JSON.stringify(this.curScry, null, 2));
+  return this.curScry;
+}
+
 const verifyScry = function (scry) {
   return true;
 };

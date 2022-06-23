@@ -21,4 +21,9 @@ router.post('/move', projectController.moveFile, (req, res, next) => {
     res.json(res.locals.newScry);
 });
 
+router.post('/rename', projectController.renameKey, (req, res, next) => {
+    res.status(200);
+    res.json(res.locals.newScry);
+});
+
 module.exports = router;

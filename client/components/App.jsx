@@ -23,6 +23,7 @@ class App extends Component {
     this.backButton = this.backButton.bind(this);
 
     this.moveFileUp = this.moveFileUp.bind(this);
+    this.renameKeyConfirm = this.renameKeyConfirm.bind(this);
 
     this.onDragStart = this.onDragStart.bind(this);
     this.onDragOver = this.onDragOver.bind(this);
@@ -71,6 +72,7 @@ class App extends Component {
           dragEnd={this.onDragEnd}
           dragLeave={this.onDragLeave}
           moveUp={this.moveFileUp}
+          renameKey={this.renameKeyConfirm}
         />
       );
     } else {
@@ -160,10 +162,9 @@ class App extends Component {
   }
 
   moveFileUp(eventData, fileName, key) {
-    if (this.state.curDirectory === '') {
+    if (this.state.curDirectory === "") {
       console.log("Cannot move a file up from the root!");
-    }
-    else {
+    } else {
       const curDirectory = this.state.curDirectory;
 
       const fullPath = this.state.scry[key];
@@ -172,10 +173,10 @@ class App extends Component {
       splitPath.pop(); //Pop again to move up a folder
       let pathBase = splitPath.join("\\");
 
-      console.log('SPLIT PATH: ', splitPath);
-      
+      console.log("SPLIT PATH: ", splitPath);
+
       if (splitPath.length > 0) pathBase += "\\"; //Adding the extra slash when checking folders outside of root
-      
+
       const oldPath = fullPath;
 
       const splitFilename = fileName.split(".");
@@ -210,6 +211,27 @@ class App extends Component {
           console.error("Error:", error);
         });
     }
+  }
+
+  renameKeyConfirm(eventData, oldKey) {
+    const newKey = eventData.target.textContent;
+    console.log(oldKey + " will become " + newKey);
+    const sendData = { oldKey: oldKey, newKey: newKey };
+
+    fetch("http://localhost:3000/projects/rename/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(sendData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({ scry: data });
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   }
 
   // Drag
