@@ -215,6 +215,12 @@ class App extends Component {
 
   renameKeyConfirm(eventData, oldKey) {
     const newKey = eventData.target.textContent;
+    if(Object.keys(this.state.scry).includes(newKey)) {
+        eventData.target.textContent = oldKey;
+        console.log('Cannot set key to ' + newKey + ' because that key already exists in our scry database!');
+        return;
+    }
+    
     console.log(oldKey + " will become " + newKey);
     const sendData = { oldKey: oldKey, newKey: newKey };
 
