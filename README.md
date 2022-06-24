@@ -13,6 +13,11 @@ Wanted to create a pseudo desktop-app using ReactJS. Foresight is a tool meant t
 * Delete files
 * Autocorrect incorrect '.scry' directories when opening project
 
+## Basics
+Preferences.json in the root folder should have most of what you need to know. There's a Project folder that it checks content for and everything is based on that. There's an array of files it allows and files/folders it ignores. Probably look into ProjectManager.js to see how the scry database works.
+
+These are all temporary features. After Codesmith the plan is to port it to a proper desktop app framework like Electron so it can function like a proper application without all the spooky scary network stuff.
+
 ## Issues
 * THE SLASHES WHEN CONVERTING LINKS TO DIRECTORIES IS KINDA MESSED UP RN
 * Clicking folder icon img instead of the button itself causes issues
@@ -27,7 +32,7 @@ Wanted to create a pseudo desktop-app using ReactJS. Foresight is a tool meant t
 
 ## Author
 
-Ian Grepo 
+Ian (G)
 <!-- [@DomPizzie](https://twitter.com/dompizzie) -->
 
 ## License
