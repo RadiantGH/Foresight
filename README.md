@@ -19,7 +19,7 @@ Preferences.json in the root folder should have most of what you need to know. T
 These are all temporary features. After Codesmith the plan is to port it to a proper desktop app framework like Electron so it can function like a proper application without all the spooky scary network stuff.
 
 ## Issues
-* THE SLASHES WHEN CONVERTING LINKS TO DIRECTORIES IS KINDA MESSED UP RN
+* NEED MORE SLASHES WHEN CONVERTING FROM KEYS TO PATHS
 * Clicking folder icon img instead of the button itself causes issues
 * Change scripts when changing foresight key
 * Change scripts when changing foresight directory (If directory is used)
