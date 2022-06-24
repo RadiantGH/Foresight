@@ -25,9 +25,13 @@ Do whatever you want.
 ## Icon
 Credit to: https://adioma.com/
 
-## To Do/Problems
+## To Do
 * Clean electron port
 * Add/delete folders
 * Delete files
 * Autocorrect incorrect '.scry' directories
+
+## Issues
 * Clicking folder icon img instead of the button itself causes issues
+* Change scripts when changing foresight key
+* Change scripts when changing foresight directory (If directory is used)
