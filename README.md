@@ -14,10 +14,10 @@ Wanted to create a pseudo desktop-app using ReactJS. Foresight is a tool meant t
 * Autocorrect incorrect '.scry' directories
 
 ## Issues
+* THE SLASHES WHEN CONVERTING LINKS TO DIRECTORIES IS KINDA MESSED UP RN
 * Clicking folder icon img instead of the button itself causes issues
 * Change scripts when changing foresight key
 * Change scripts when changing foresight directory (If directory is used)
-
 
 ## Dependencies
 
