@@ -11,7 +11,7 @@ Wanted to create a pseudo desktop-app using ReactJS. Foresight is a tool meant t
 * Clean electron port
 * Add/delete folders
 * Delete files
-* Autocorrect incorrect '.scry' directories
+* Autocorrect incorrect '.scry' directories when opening project
 
 ## Issues
 * THE SLASHES WHEN CONVERTING LINKS TO DIRECTORIES IS KINDA MESSED UP RN
