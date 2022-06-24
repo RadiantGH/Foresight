@@ -19,7 +19,7 @@ Wanted to create a pseudo desktop-app using ReactJS. Foresight is a tool meant t
 * Change scripts when changing foresight directory (If directory is used)
 
 
-### Dependencies
+## Dependencies
 
 * React
 * Express
