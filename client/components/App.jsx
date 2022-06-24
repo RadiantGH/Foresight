@@ -54,16 +54,19 @@ class App extends Component {
 
     if (this.state.curProject === "" && this.state.projects.length > 0) {
       //LOOKING FOR PROJECT!!!
+      
       subRender = (
-        <ProjectFinder
-          projects={this.state.projects}
-          openProject={this.openProject}
-        />
+        <div className='content-container'>
+            <ProjectFinder
+            projects={this.state.projects}
+            openProject={this.openProject}
+            />
+        </div>
       );
     } else if (this.state.curProject !== "") {
       //Currently browsing project!!
       subRender = (
-        <>
+        <div className='content-container'>
             <ProjectFinder
             projects={this.state.projects}
             openProject={this.openProject}
@@ -87,7 +90,7 @@ class App extends Component {
             moveUp={this.moveFileUp}
             renameKey={this.renameKeyConfirm}
             />
-        </>
+        </div>
       );
     } else {
       //Please wait
@@ -139,7 +142,7 @@ class App extends Component {
   getLink(eventData, k) {
     const link = `http://localhost:${port}/foresight/${k}`;
     if(eventData) {
-        eventData.target.textContent = "Copied Link!";
+        // eventData.target.textContent = "Copied Link!";
         navigator.clipboard.writeText(link);
     }
     else {

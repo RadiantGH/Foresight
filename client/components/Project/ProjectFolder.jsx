@@ -12,16 +12,15 @@ const ProjectFolder = props => {
     dragLeave
     */
    return (
-    <div className='project-folder'>
-        <button
+        <button className='project-folder'
             id={props.folderName}
             onClick={props.openFolder}
-            className='project-folder'
             onDragOver={props.dragOver}
             onDragEnter={(event) => props.dragEnter(event, props.folderName)}
             onDragLeave={props.dragLeave}
-        >FOLDER: {props.folderName}</button>
-    </div>
+        >
+            <img src='https://i.imgur.com/25L7OqK.png' width='30' height='30'/> {props.folderName}
+        </button>
   );
 }
   

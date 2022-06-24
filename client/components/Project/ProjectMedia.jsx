@@ -17,7 +17,7 @@ const ProjectMedia = props => {
     onDragEnd={props.dragEnd}
     draggable
     >
-        <div className='editable-key'><h3><span
+        <div className='editable-key'><h3 className='edit-text'><span
         contentEditable
         spellCheck="false"
         onKeyPress={(eventData) => {
@@ -30,15 +30,24 @@ const ProjectMedia = props => {
         // onInput={(eventData) => props.renameKey(eventData, props.foresightKey)}
         >{props.foresightKey}
         </span></h3></div>
-        <button className='copy-link' onClick={(event) => props.getLink(event, props.foresightKey)}>Copy Link</button>
-        <button className='move-up' onClick={(event) => props.moveUp(event, props.name, props.foresightKey)}>Move Up</button>
-        <img
-            className='media-img'
-            src={props.getLink(undefined, props.foresightKey)}
-            alt={props.name}
-            width='300'
-            height='600'
-        /> 
+        
+        <div className='img-container'>
+            <img
+                className='media-img'
+                src={props.getLink(undefined, props.foresightKey)}
+                alt={props.name}
+                width='300'
+                height='600'
+            />
+        </div>
+        <div className='button-holder'>
+            <button className='copy-link' onClick={(event) => props.getLink(event, props.foresightKey)}>
+                <img src='https://i.imgur.com/lDqN9yU.png' width='20' height='20'/>
+            </button>
+            <button className='move-up' onClick={(event) => props.moveUp(event, props.name, props.foresightKey)}>
+                <img src='https://i.imgur.com/yYoGWmN.png' width='20' height='20'/>
+            </button>
+        </div>
     </div>
   );
 }

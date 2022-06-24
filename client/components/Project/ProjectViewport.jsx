@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ProjectHeader from './ProjectHeader.jsx';
 import ProjectMedia from './ProjectMedia.jsx';
 import ProjectFolder from './ProjectFolder.jsx';
+import Btn_Back from "./Btn_Back.jsx";
 
 class ProjectViewport extends Component {
     constructor(props) {
@@ -106,17 +107,18 @@ class ProjectViewport extends Component {
           <ProjectHeader
           curDirectory={this.props.curDirectory}
           curProject={this.props.curProject}
-          backButton={this.props.backButton}
           toPaths={this.props.toPaths}
           toKeys={this.props.toKeys}
           />
-
-          <div id='folder-container'>
+        <hr/>
+        <div id='folder-container'>
+              <Btn_Back clickHandler={this.props.backButton}/>
               {showFolders}
-          </div>
-          <div id='file-container'>
+        </div>
+        <hr/>
+        <div id='file-container'>
               {showFiles}
-          </div>
+        </div>
       </div>
       );
     }

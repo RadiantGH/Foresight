@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 
 const Btn_Back = props => (
-    <button id='back-button' onClick={props.clickHandler}>BACK</button>
+    <div id='back-button' onClick={props.clickHandler}>
+      <img src='https://i.imgur.com/bw95QDh.png' widht='30' height='30'/>
+    </div>
   );
   
 export default Btn_Back;
