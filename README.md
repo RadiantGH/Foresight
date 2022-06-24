@@ -24,3 +24,10 @@ Do whatever you want.
 
 ## Icon
 Credit to: https://adioma.com/
+
+## To Do/Problems
+* Clean electron port
+* Add/delete folders
+* Delete files
+* Autocorrect incorrect '.scry' directories
+* Clicking folder icon img instead of the button itself causes issues
